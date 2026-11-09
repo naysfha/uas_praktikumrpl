@@ -13,7 +13,7 @@ class PenggunaView(ctk.CTkFrame):
         super().__init__(master, fg_color="transparent")
         self.ctrl = PenggunaController(user)
         header_halaman(self, "Manajemen Pengguna", "Kelola akun Admin, Petugas, dan Anggota",
-                       [("+ Tambah", self.form_tambah, ACCENT), ("Ubah", self.form_ubah, BIRU),
+                       [("Ubah", self.form_ubah, BIRU),
                         ("Reset PW", self.form_reset, KUNING), ("Hapus", self.hapus, MERAH)])
         self.cari = kotak_cari(self, self.refresh, "Cari username / nama / role")
         self.tabel = DataTable(self, [("ID", 50, "center"), ("Username", 200, "w"),
