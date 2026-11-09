@@ -1,5 +1,4 @@
 from datetime import date
-
 import customtkinter as ctk
 
 from controllers.simpanan_controller import SimpananController, JENIS
