@@ -1,5 +1,7 @@
 import hashlib
 from config.database import Database
+from config.database import Database, fetch_all, fetch_one, execute
+from utils.helpers import AturanBisnis
 
 class UserModel:
     def __init__(self):
@@ -46,3 +48,37 @@ class UserModel:
             finally:
                 cursor.close()
         return False
+    
+    def semua(keyword=""):
+        like = f"%{keyword}%"
+        return fetch_all("""
+            SELECT id_pengguna, username, nama_pengguna, role
+            FROM pengguna
+            WHERE %s = '' OR username LIKE %s OR nama_pengguna LIKE %s OR role LIKE %s
+            ORDER BY id_pengguna""", (keyword, like, like, like))
+
+    def by_id(id_pengguna):
+        return fetch_one("SELECT id_pengguna, username, nama_pengguna, role "
+                         "FROM pengguna WHERE id_pengguna=%s", (id_pengguna,))
+
+    def tambah(username, password, nama, role):
+        return execute("INSERT INTO pengguna (username, password, nama_pengguna, role) "
+                       "VALUES (%s,%s,%s,%s)",
+                       (username, UserModel.hash_password(password), nama, role))
+
+    def ubah(id_pengguna, username, nama, role):
+        return execute("UPDATE pengguna SET username=%s, nama_pengguna=%s, role=%s "
+                       "WHERE id_pengguna=%s", (username, nama, role, id_pengguna))
+
+    def reset_password(id_pengguna, password_baru):
+        return execute("UPDATE pengguna SET password=%s WHERE id_pengguna=%s",
+                       (UserModel.hash_password(password_baru), id_pengguna))
+
+    def hapus(id_pengguna):
+        return execute("DELETE FROM pengguna WHERE id_pengguna=%s", (id_pengguna,))
+
+    def ganti_password(id_pengguna, lama, baru):
+        row = fetch_one("SELECT password FROM pengguna WHERE id_pengguna=%s", (id_pengguna,))
+        if not row or row['password'] != UserModel.hash_password(lama):
+            raise AturanBisnis("Password lama salah.")
+        return UserModel.reset_password(id_pengguna, baru)
