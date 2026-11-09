@@ -6,7 +6,7 @@ from views.register_view import RegisterView
 from controllers.dashboard_controller import DashboardController
 
 class AuthController:
-    # Setup jendela utama aplikasi 
+    # Setup jendela utama aplikasi
     def __init__(self):
         self.root = ctk.CTk()
         self.root.geometry("800x500")
