@@ -3,8 +3,7 @@ from tkinter import messagebox
 
 from controllers.anggota_controller import AnggotaController
 from views.components import (DataTable, FormDialog, header_halaman, kotak_cari, pilih_baris,
-                             tampilkan_hasil, ACCENT, BIRU, MERAH)
-
+                             tampilkan_hasil, BIRU, MERAH)
 
 class AnggotaView(ctk.CTkFrame):
     # Admin: tambah/ubah/hapus
@@ -14,10 +13,7 @@ class AnggotaView(ctk.CTkFrame):
         self.user = user
         self.ctrl = AnggotaController(user) # Hubungkan ke controller
         admin = user['role'] == 'Admin'
-
-        # Tombol "+ Tambah" HANYA muncul untuk Admin
-        tombol = [("+ Tambah", self.form_tambah, ACCENT)] if admin else []
-        tombol += [("Ubah", self.form_ubah, BIRU), ("Hapus", self.hapus, MERAH)]
+        tombol = [("Ubah", self.form_ubah, BIRU), ("Hapus", self.hapus, MERAH)]
         
         # Tampilkan judul halaman + tombol aksi
         header_halaman(self, "Kelola Anggota" if admin else "Data Anggota",

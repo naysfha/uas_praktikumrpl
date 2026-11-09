@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 from controllers.pengguna_controller import PenggunaController, ROLES
 from views.components import (DataTable, FormDialog, header_halaman, kotak_cari, pilih_baris,
-                              tampilkan_hasil, ACCENT, BIRU, KUNING, MERAH)
+                              tampilkan_hasil, BIRU, KUNING, MERAH)
 
 
 class PenggunaView(ctk.CTkFrame):
